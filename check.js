@@ -3,20 +3,34 @@ function checkValues(){
     form = document.getElementById('form');
     y = form.Y.value;
     error = false;
-    if(isNaN(y)||y<=-3||y>=3){
-        error = true;
-        alert("Неверное значение Y. Введите число от -3 до 3.");
+    if (y == "DEUS VULT" || y == "AVE MARIA"){
+        var audio = new Audio('./music/DEUS_VULT.mp3');
+        audio.play();
+        document.body.style.backgroundImage = "url('./img/bg_crusade.jpg')";
+        document.body.style.backgroundColor = "white";
+        document.getElementById('send').style.visibility = "hidden";
+        audio.onended = function() {
+            document.body.style.backgroundImage = "url('./img/bg.jpg')";
+            document.body.style.backgroundColor = "#9a0000";
+            document.getElementById('send').style.visibility = "visible";
+        };
     }
-    if(y == "") {
-        alert("Неверное значение Y. Введите число от -3 до 3.");
-        error = true;
+    else {
+        if (isNaN(y) || y <= -3 || y >= 3) {
+            error = true;
+            alert("Неверное значение Y. Введите число от -3 до 3.");
+        }
+        if (y == "") {
+            alert("Неверное значение Y. Введите число от -3 до 3.");
+            error = true;
+        }
+        if (error===false) {
+            form.submit();
+            document.getElementById('answer').style.display="block";
+            draw('canvas', form.R.value);
+        }
     }
 
-    if (error===false) {
-        form.submit();
-        document.getElementById('answer').style.display="block";
-        draw('canvas', form.R.value);
-    }
 }
 
 function extendSize(elementID){
